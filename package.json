@@ -14,7 +14,7 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "chromatic --playwright -t=chpt_c89a013d0c3d29c",
+    "chromatic": "chromatic --playwright",
     "test:visual": "npx playwright test --project=visual",
     "test:e2e": "npx playwright test --project=e2e",
     "test:e2e-debug": "npx playwright test --project=e2e --headed"
