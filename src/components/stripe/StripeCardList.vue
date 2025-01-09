@@ -22,6 +22,7 @@
         :card="paymentCard"
         :billing-details="paymentCard.billingDetails"
         :class="{ 'border-primary': selectedCardId === paymentCard.id }"
+        data-testid="card-row"
         @click="selectCard(paymentCard.id)"
       >
         <slot name="card-actions" :card="paymentCard"></slot>

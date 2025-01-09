@@ -117,6 +117,7 @@ const { projects } = useProjects({ pagination: ref({ page: 1, perPage: 9999, tot
           class="w-full sm:w-1/2"
           :rules="[validators.required]"
           name="fullname"
+          data-testid="fullname-input"
         />
         <VaInput
           v-model="newUser.username"
@@ -124,6 +125,7 @@ const { projects } = useProjects({ pagination: ref({ page: 1, perPage: 9999, tot
           class="w-full sm:w-1/2"
           :rules="[validators.required]"
           name="username"
+          data-testid="username-input"
         />
       </div>
       <div class="flex gap-4 flex-col sm:flex-row w-full">
@@ -133,6 +135,7 @@ const { projects } = useProjects({ pagination: ref({ page: 1, perPage: 9999, tot
           class="w-full sm:w-1/2"
           :rules="[validators.required, validators.email]"
           name="email"
+          data-testid="email-input"
         />
         <VaSelect
           v-model="newUser.projects"
@@ -162,14 +165,24 @@ const { projects } = useProjects({ pagination: ref({ page: 1, perPage: 9999, tot
         </div>
 
         <div class="flex items-center w-1/2 mt-4">
-          <VaCheckbox v-model="newUser.active" label="Active" class="w-full" name="active" />
+          <VaCheckbox
+            v-model="newUser.active"
+            label="Active"
+            class="w-full"
+            name="active"
+            data-testid="active-checkbox"
+          />
         </div>
       </div>
 
-      <VaTextarea v-model="newUser.notes" label="Notes" class="w-full" name="notes" />
+      <VaTextarea v-model="newUser.notes" label="Notes" class="w-full" name="notes" data-testid="notes-textarea" />
       <div class="flex gap-2 flex-col-reverse items-stretch justify-end w-full sm:flex-row sm:items-center">
-        <VaButton preset="secondary" color="secondary" @click="$emit('close')">Cancel</VaButton>
-        <VaButton :disabled="!isValid" @click="onSave">{{ saveButtonLabel }}</VaButton>
+        <VaButton preset="secondary" color="secondary" data-testid="cancel-button" @click="$emit('close')">
+          Cancel
+        </VaButton>
+        <VaButton :disabled="!isValid" data-testid="save-button" @click="onSave">
+          {{ saveButtonLabel }}
+        </VaButton>
       </div>
     </div>
   </VaForm>

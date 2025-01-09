@@ -90,7 +90,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
             </template>
           </VaInput>
         </div>
-        <VaButton @click="showAddUserModal">Add User</VaButton>
+        <VaButton data-testid="add-user-button" @click="showAddUserModal">Add User </VaButton>
       </div>
 
       <UsersTable
@@ -113,6 +113,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
     close-button
     hide-default-actions
     :before-cancel="beforeEditFormModalClose"
+    data-testid="add-user-form"
   >
     <h1 class="va-h5">{{ userToEdit ? 'Edit user' : 'Add user' }}</h1>
     <EditUserForm

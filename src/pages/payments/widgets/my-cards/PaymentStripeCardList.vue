@@ -1,7 +1,13 @@
 <template>
   <CardList>
     <template #card-actions="{ card }">
-      <VaButton icon="mso-delete" preset="primary" aria-label="Remove" @click="remove(card)" />
+      <VaButton
+        icon="mso-delete"
+        preset="primary"
+        aria-label="Remove"
+        data-testid="remove-card"
+        @click="remove(card)"
+      />
     </template>
     <div
       class="sm:h-[114px] p-4 rounded-lg border border-dashed border-primary flex flex-col sm:flex-row items-start sm:items-center gap-4"
@@ -13,7 +19,7 @@
           Please carefully read Product Terms before adding your new payment card
         </div>
       </div>
-      <VaButton class="flex-none w-full sm:w-auto" @click="showCreate = true">Add card</VaButton>
+      <VaButton class="flex-none w-full sm:w-auto" data-testid="add-card" @click="showCreate = true">Add card</VaButton>
     </div>
   </CardList>
   <PaymentCardCreateModal v-if="showCreate" @close="showCreate = false" />

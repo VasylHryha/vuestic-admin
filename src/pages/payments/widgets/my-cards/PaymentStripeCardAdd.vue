@@ -6,6 +6,7 @@
       :rules="[(v) => !!v || 'Cardholder Name is required']"
       class="mb-4"
       label="Cardholder Name"
+      data-testid="cardholder-name"
     />
 
     <div class="mb-4">
@@ -17,7 +18,7 @@
 
     <div class="flex justify-end gap-3">
       <VaButton color="secondary" preset="secondary" @click="emits('cancel')">Cancel</VaButton>
-      <VaButton @click="submit">Save Card</VaButton>
+      <VaButton data-testid="save-card" @click="submit">Save Card</VaButton>
     </div>
   </VaForm>
 </template>
