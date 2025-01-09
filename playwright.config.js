@@ -1,4 +1,5 @@
 const { defineConfig } = require('@playwright/test')
+require('dotenv').config(); // Load .env variables
 
 module.exports = defineConfig({
   // Global settings
@@ -8,7 +9,7 @@ module.exports = defineConfig({
   snapshotDir: './snapshots', // Shared snapshot directory for snapshots
   use: {
     headless: true, // Run in headless mode by default
-    baseURL: 'http://localhost:5173', // Base URL for all tests
+    baseURL: 'http://localhost:' + process.env.TEST_PORT, // Base URL for all tests
     trace: 'on-first-retry', // Collect trace on first retry
   },
 

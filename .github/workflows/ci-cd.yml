@@ -42,7 +42,7 @@ jobs:
       - name: Start Server for Tests
         run: |
           yarn start:ci &
-          npx wait-on http://localhost:5173 # Adjust to your server URL
+          npx wait-on http://localhost:3000 # Adjust to your server URL
 
       - name: Run Visual Tests
         run: yarn test:visual
@@ -73,7 +73,7 @@ jobs:
       - name: Start Server for Tests
         run: |
           yarn start:ci &
-          npx wait-on http://localhost:5173 # Wait for the server to start
+          npx wait-on http://localhost:3000 # Wait for the server to start
 
       - name: Run E2E Tests
         run: yarn test:e2e
