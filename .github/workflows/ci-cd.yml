@@ -46,7 +46,7 @@ jobs:
         run: |
           npx serve -s ./dist &
           echo $! > server_pid.txt
-          npx wait-on http://localhost:5000 --timeout 60000
+          npx wait-on http://localhost:3000 --timeout 60000
 
       - name: Run Visual Tests
         run: yarn test:visual
