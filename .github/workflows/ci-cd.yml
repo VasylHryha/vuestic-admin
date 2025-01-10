@@ -24,7 +24,6 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-
       - name: Lint and Build
         run: yarn build:ci
 
@@ -43,15 +42,17 @@ jobs:
         with:
           name: build-output
 
+      - name: go to root
+        run: cd ../
+
+      - name: List directory contents
+        run: ls
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
       - name: Install pm2
         run: npm install -g pm2
-
-
-      - name: List directory contents
-        run: ls
 
       - name: Start Server
         run: |
