@@ -39,13 +39,16 @@ jobs:
         with:
           name: build-output
 
+      - name: Install PM2
+        run: npm install -g pm2
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Serve Start
+      - name: Start Server with PM2
         run: |
-          npx serve -s ./dist &
-          echo $! > server_pid.txt
+          pm2 start npx --name "serve-app" -- serve -s ./dist
+          pm2 save
           npx wait-on http://localhost:3000 --timeout 60000
 
       - name: Run Visual Tests
@@ -53,7 +56,8 @@ jobs:
 
       - name: Stop Server
         run: |
-          kill $(cat server_pid.txt)
+          pm2 stop serve-app
+          pm2 delete serve-app
 
   e2e-tests:
     needs: [ build, visual-tests ]
@@ -64,13 +68,16 @@ jobs:
         with:
           name: build-output
 
+      - name: Install PM2
+        run: npm install -g pm2
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Serve Start
+      - name: Start Server with PM2
         run: |
-          npx serve -s ./dist &
-          echo $! > server_pid.txt
+          pm2 start npx --name "serve-app" -- serve -s ./dist
+          pm2 save
           npx wait-on http://localhost:3000 --timeout 60000
 
       - name: Reset Database
@@ -81,4 +88,5 @@ jobs:
 
       - name: Stop Server
         run: |
-          kill $(cat server_pid.txt)
+          pm2 stop serve-app
+          pm2 delete serve-app
