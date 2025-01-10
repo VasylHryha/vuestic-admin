@@ -6,18 +6,17 @@ on:
       - test
   pull_request:
 
-env:
-  ACTIONS_STEP_DEBUG: true
-
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
 
@@ -38,10 +37,11 @@ jobs:
       - name: Run Visual Tests
         run: yarn test:visual
 
-      - name: Publish to Chromatic
-        run: npx chromatic --playwright
-        env:
-          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          playwright: true
 
       - name: Run E2E Tests
         run: yarn test:e2e
