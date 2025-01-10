@@ -50,9 +50,8 @@ jobs:
         run: npm install -g pm2
 
 
-      - name: List 'dist' directory contents
-        run: ls -la ./dist
-
+      - name: List directory contents
+        run: ls
 
       - name: Start Server
         run: |
