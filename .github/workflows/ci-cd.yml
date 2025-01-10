@@ -38,8 +38,10 @@ jobs:
       - name: Run Visual Tests
         run: yarn test:visual
 
-      - name: Run Chromatic Tests
-        run: yarn chromatic
+      - name: Publish to Chromatic
+        run: npx chromatic --playwright
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
       - name: Run E2E Tests
         run: yarn test:e2e
