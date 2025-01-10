@@ -38,6 +38,9 @@ jobs:
       - name: Run Visual Tests
         run: yarn test:visual
 
+      - name: Run Chromatic Tests
+        run: yarn chromatic
+
       - name: Run E2E Tests
         run: yarn test:e2e
 
