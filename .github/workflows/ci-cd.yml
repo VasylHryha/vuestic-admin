@@ -48,7 +48,6 @@ jobs:
       - name: Start Server
         run: |
           pm2 start npx -- serve -s ./dist
-          npx wait-on http://localhost:3000 --timeout 60000
 
       - name: Run Visual Tests
         run: yarn test:visual
