@@ -30,12 +30,38 @@ jobs:
           name: build-output
           path: ./dist # Adjust path to your build output
 
-      - name: Serve Build
-        run: yarn start:ci
+  visual-tests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-output
 
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Start Server in Background
+        run: |
+          yarn start:ci > server.log 2>&1 &
+          echo $! > server_pid.txt
+
+      - name: Wait for Server to be Ready
+        run: |
+          tail -f server.log | while read LOGLINE
+          do
+            [[ "${LOGLINE}" == *"Serving!"* ]] && pkill -P $$ tail
+          done
+
+      - name: Run Visual Tests
+        run: yarn test:visual
 
   e2e-tests:
-    needs: build
+    needs: [build, visual-tests]
     runs-on: ubuntu-latest
     steps:
       - name: Download Build Artifact
@@ -52,17 +78,4 @@ jobs:
       - name: Run E2E Tests
         run: yarn test:e2e
 
-  visual-tests:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download Build Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-output
 
-      - name: Serve Build
-        run: yarn start:ci
-
-      - name: Run Visual Tests
-        run: yarn test:visual
