@@ -46,8 +46,8 @@ jobs:
       - name: Run E2E Tests
         run: yarn test:e2e
 
-      - name: Reset Database
-        run: yarn reset-db
+#      - name: Reset Database
+#        run: yarn reset-db
 
       - name: Stop Server
         run: |

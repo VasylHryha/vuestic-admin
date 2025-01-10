@@ -1,4 +1,4 @@
-import { test, expect } from '@chromatic-com/playwright'
+import { test } from '@chromatic-com/playwright'
 
 const routes = [
   '/dashboard',
@@ -19,8 +19,7 @@ const routes = [
 
 test.describe('Visual Tests for All Routes', () => {
   routes.forEach((route) => {
-    test(`Visual test for ${route}`, async ({ page, baseURL }) => {
-      console.log(`Base URL: ${baseURL}`)
+    test(`Visual test for ${route}`, async ({ page}) => {
       await page.goto(route) // Automatically prepends the baseURL
       await page.waitForLoadState('networkidle') // Ensure the page is fully loaded
       await page.waitForTimeout(500) // Optional delay for animations or dynamic content
