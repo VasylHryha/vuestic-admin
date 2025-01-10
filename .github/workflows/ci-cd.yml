@@ -6,11 +6,8 @@ on:
       - test
   pull_request:
 
-env:
-  ACTIONS_STEP_DEBUG: true
-
 jobs:
-  build:
+  build_and_test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -26,72 +23,17 @@ jobs:
 
       - name: Lint and Build
         run: yarn build:ci
-
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-output
-          path: ./dist # Adjust path to your build output
-
-  visual-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Lint and Build
-        run: yarn build:ci
-
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-output
-          path: ./dist # Adjust path to your build output
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-
-      - name: Install pm2
-        run: npm install -g pm2
 
       - name: Start Server
         run: |
-          pm2 start npx -- serve -s ./dist
+          npx serve -s ./dist &
+          npx wait-on http://localhost:3000 --timeout 60000
 
       - name: Run Visual Tests
         run: yarn test:visual
-
-      - name: Stop Server
-        run: pm2 stop all
-
-
-  e2e-tests:
-    needs: [ visual-tests ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download Build Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-output
-
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-
-      - name: Install PM2
-        run: npm install -g pm2
-
-      - name: Serve Application with PM2
-        run: |
-          pm2 start npx -- serve -s ./dist
-          npx wait-on http://localhost:3000 --timeout 60000
 
       - name: Reset Database
         run: yarn reset-db
@@ -99,5 +41,6 @@ jobs:
       - name: Run E2E Tests
         run: yarn test:e2e
 
-      - name: Stop PM2 Server
-        run: pm2 stop all
+      - name: Stop Server
+        run: |
+          kill $(lsof -t -i:3000)
