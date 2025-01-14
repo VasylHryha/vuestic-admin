@@ -8,8 +8,7 @@ const MOCKED_USER_DATA = {
 }
 
 test.describe('Users Page Tests', () => {
-  test('Switch between active and inactive users and count results', async ({ page, baseURL }) => {
-    console.log(`Base URL: ${baseURL}`)
+  test('Switch between active and inactive users and count results', async ({ page }) => {
     // Navigate to the users page
     await page.goto('/users')
     await page.waitForLoadState('networkidle') // Ensure the page is fully loaded
