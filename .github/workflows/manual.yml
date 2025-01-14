@@ -1,0 +1,11 @@
+name: Manual Trigger Workflow
+
+on:
+  workflow_dispatch: # Enables manual triggering
+
+jobs:
+  manual-trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Action Triggered
+        run: echo "Action Triggered for branch: ${{ github.ref_name }}"
